@@ -1,0 +1,2 @@
+#!/bin/ssh
+php bin/console s:run
