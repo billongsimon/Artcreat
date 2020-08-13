@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
-class Comment
+class Commentaire
 {
     /**
      * @ORM\Id()
@@ -19,12 +19,12 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Auteur;
+    private $author;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $contenu;
+    private $content;
 
     /**
      * @ORM\Column(type="datetime")
@@ -32,7 +32,7 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;
@@ -42,26 +42,26 @@ class Comment
         return $this->id;
     }
 
-    public function getAuteur(): ?string
+    public function getAuthor(): ?string
     {
-        return $this->Auteur;
+        return $this->author;
     }
 
-    public function setAuteur(string $Auteur): self
+    public function setAuthor(string $author): self
     {
-        $this->Auteur = $Auteur;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getContenu(): ?string
+    public function getContent(): ?string
     {
-        return $this->contenu;
+        return $this->content;
     }
 
-    public function setContenu(string $contenu): self
+    public function setContent(string $content): self
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
 
         return $this;
     }

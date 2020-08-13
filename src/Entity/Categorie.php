@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Categorie
 {
+    const A_LA_UNE = 'À la une';
+    const VIE_DES_PROJETS = 'Vie des projets';
+    const AGENDA = 'Agenda';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -24,18 +28,18 @@ class Categorie
     private $titre;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="categorie")
      */
-    private $resume;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie")
-     */
-    private $articles;
+    private $pages;
 
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
+        $this->pages = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
     }
 
     public function getId(): ?int
@@ -55,46 +59,35 @@ class Categorie
         return $this;
     }
 
-    public function getResume(): ?string
-    {
-        return $this->resume;
-    }
-
-    public function setResume(?string $resume): self
-    {
-        $this->resume = $resume;
-
-        return $this;
-    }
-
     /**
-     * @return Collection|Article[]
+     * @return Collection|Page[]
      */
-    public function getArticles(): Collection
+    public function getPages(): Collection
     {
-        return $this->articles;
+        return $this->pages;
     }
 
-    public function addArticle(Article $article): self
+    public function addPage(Page $page): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->setCategorie($this);
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removePage(Page $page): self
     {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
+        if ($this->pages->contains($page)) {
+            $this->pages->removeElement($page);
             // set the owning side to null (unless already changed)
-            if ($article->getCategorie() === $this) {
-                $article->setCategorie(null);
+            if ($page->getCategorie() === $this) {
+                $page->setCategorie(null);
             }
         }
 
         return $this;
     }
+
 }
