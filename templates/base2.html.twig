@@ -48,39 +48,7 @@
       </div>
     </div> 
 
-   <nav class="navbar navbar-light bg-primary " >
-      <form class="form-inline">
-        <a href="{{path('admin')}}" > 
-              <button class="btn btn-outline-success bg-dark" type="button"  bg-dark>Accueil</button> 
-        </a>
-      
-        <a href="#" >
-          <button class="btn btn-sm btn-outline-secondary bg-dark" type="button"  >Connexion</button>
-        </a>
-        
-        <a href="{{path('admin.page')}}" > 
-          <button class="btn btn-sm btn-outline-secondary bg-dark" type="button"  >Liste des pages</button>
-        </a>
-      
 
-         <a href="{{path('admin.categorie')}}" > 
-          <button class="btn btn-sm btn-outline-secondary" type="button">Liste des catégories</button>
-        </a>
-
-           <a href="{{path('document_index')}}" >
-          <button class="btn btn-sm btn-outline-secondary" type="button">Liste des documents</button>
-        </a>
-        
-           <a href="{{path('page')}}" >
-          <button class="btn btn-sm btn-outline-secondary" type="button">Arborescence des pages</button>
-        </a>
-      </form>
-
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-</nav>
         {% block body %}
 
 

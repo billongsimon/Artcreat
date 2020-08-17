@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categorie;
 use App\Entity\Document;
-use App\Entity\Page;
+use App\Entity\Article;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class PageType extends AbstractType
+class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,7 +32,7 @@ class PageType extends AbstractType
                 'required' => false
             ])
             ->add('parent', EntityType::class, [
-                'class' => Page::class,
+                'class' => Article::class,
                 "choice_label" => 'titre',
                 'required' => false
             ])
@@ -67,7 +67,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Page::class,
+            'data_class' => Article::class,
         ]);
     }
 }

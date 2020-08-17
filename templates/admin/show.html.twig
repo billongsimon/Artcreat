@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Calipso{% endblock %}
+
+{% block body %}
+<a href="{{path('admin')}}" class="btn btn-primary"> retour vers l'accueil </a> 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<a href="{{path('admin.page')}}" class="btn btn-primary"> retour vers la liste</a> 
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+  
+    <article>
+    <div>
+            <p>Numero de la page: {{page.id}}</p>
+
+           <p>Titre de :</p>
+            {{page.titre}}
+            <p>Categorie :</p>
+              {{page.categorie.titre}}
+
+
+             <p>contenu: </p>
+            
+             {{page.contenu}}
+            <p>écrit par:</p>
+             {{page.auteur}}
+            <p>Date de creation de la page:</p>
+        {{page.createdAt | date('d/m/Y h:i ')}}
+        <p>Date de modification de la page:</p>
+        {{page.jourAt | date('d/m/Y h:i ')}}
+      <p>documents </p>
+      {% for document in page.documents %}
+    
+   <a href="{{ path('document.upload', {'id': document.id}) }}" target="_blank" class="btn btn-info">  {{document.titre}}</a><br><br>
+
+{% endfor %}
+            </div>
+       </article>   
+      <a href="{{ path('admin') }}"retour vers l'accueil</a>.
+      <br>
+      <br>
+      <br>     
+{% endblock %}

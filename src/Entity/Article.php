@@ -8,9 +8,9 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  */
-class Page
+class Article
 {
     /**
      * @ORM\Id()
@@ -45,24 +45,24 @@ class Page
     private $contenu;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="pages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="Articles")
      */
     private $categorie;
 
     /**
-    * @var page
-    * @ORM\ManyToOne(targetEntity="App\Entity\Page", inversedBy="enfants")
+    * @var Article
+    * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="enfants")
      */
     private $parent;
 
     /**
     * var ArrayCollection
-    * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="parent")
+    * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="parent")
      */
     private $enfants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="Article")
      */
     private $documents;
 
@@ -155,15 +155,15 @@ class Page
         return $this;
     }
     /**
-     * @return page $parent
+     * @return Article $parent
      */
 
-        public function getParent(): ?page
+        public function getParent(): ?Article
         {
             return $this->parent;
         }
     /**
-    * @param page $parent
+    * @param Article $parent
     */
 
         public function setParent( $parent): self
@@ -178,7 +178,7 @@ class Page
          */
         public function getEnfants(): Collection
         {
-            // NOTE : c'est un critère de recherche pour trié par défaut les pages enfants par titre
+            // NOTE : c'est un critère de recherche pour trié par défaut les Articles enfants par titre
             $orderBy = (Criteria::create())->orderBy(['titre' => Criteria::ASC]);
 
             return $this->enfants->matching($orderBy);
@@ -214,7 +214,7 @@ class Page
         {
             if (!$this->documents->contains($document)) {
                 $this->documents[] = $document;
-                $document->setPage($this);
+                $document->setArticle($this);
             }
 
             return $this;
@@ -225,8 +225,8 @@ class Page
             if ($this->documents->contains($document)) {
                 $this->documents->removeElement($document);
                 // set the owning side to null (unless already changed)
-                if ($document->getPage() === $this) {
-                    $document->setPage(null);
+                if ($document->getArticle() === $this) {
+                    $document->setArticle(null);
                 }
             }
 

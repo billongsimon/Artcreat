@@ -2,28 +2,28 @@
 
 namespace App\Repository;
 
-use App\Entity\Page;
+use App\Entity\Article;
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Page|null find($id, $lockMode = null, $lockVersion = null)
- * @method Page|null findOneBy(array $criteria, array $orderBy = null)
- * @method Page[]    findAll()
- * @method Page[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Article|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Article|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Article[]    findAll()
+ * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PageRepository extends ServiceEntityRepository
+class ArticleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Page::class);
+        parent::__construct($registry, Article::class);
     }
 
     /**
-     * @return Page[] Returns an array of Page objects
+     * @return Article[] Returns an array of Article objects
      */
-    public function findPagesSansParent()
+    public function findArticlesSansParent()
     {
         return $this->createQueryBuilder('p')
             ->where('p.parent IS NULL')
@@ -34,9 +34,9 @@ class PageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Page[] Returns an array of Page objects
+     * @return Article[] Returns an array of Article objects
      */
-    public function findPagesALaUne()
+    public function findArticlesALaUne()
     {
         return $this->createQueryBuilder('p')
             ->join('p.parent', 'parent')
@@ -49,9 +49,9 @@ class PageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Page[] Returns an array of Page objects
+     * @return Article[] Returns an array of Article objects
      */
-    public function findPagesVieDesProjets()
+    public function findArticlesVieDesProjets()
     {
         return $this->createQueryBuilder('p')
             ->join('p.parent', 'parent')
@@ -65,9 +65,9 @@ class PageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Page[] Returns an array of Page objects
+     * @return Article[] Returns an array of Article objects
      */
-    public function findPagesAgenda()
+    public function findArticlesAgenda()
     {
         return $this->createQueryBuilder('p')
             ->join('p.parent', 'parent')
@@ -79,9 +79,9 @@ class PageRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findLastPages()
+    public function findLastArticles()
     {
-        $query= "select * from page order by created_at desc limit 3";
+        $query= "select * from Article order by created_at desc limit 3";
               $stmt = $this->getEntityManager()
               ->getConnection()->prepare($query);
                 $stmt->execute();

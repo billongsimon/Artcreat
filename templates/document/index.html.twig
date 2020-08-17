@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des documents{% endblock %}
+
+{% block body %}
+<a href="{{path('admin')}}" class="btn btn-primary"> retour vers l'accueil </a> 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1>Liste des documents</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                 <td>{{ document.titre }}</td>
+    <td><a href="{{path('document_new', {'id':document.id})}}" class="btn btn-info"> Ajouter un document </a></td>                                              
+    <td><a href="{{path('document_delete', {'id':document.id})}}" class="btn btn-danger"> Supprimer un document </a></td>  
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">aucun resultats trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('document_new') }}">Ajout d'un document</a>
+    
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des pages{% endblock %}
+
+{% block body %}
+
+    {% for arborescence in arborescences %} 
+<ul>
+{% for arborescence in arborescences %}
+    <p>{% if arborescence.niveau is not null %}{{ arborescence.page.titre }}{% endif %}</p>
+
+    <li>{{ arborescence.page.titre }}</li>
+    {% endfor %}
+</ul>
+    {% endfor %}
+
+{% endblock %}

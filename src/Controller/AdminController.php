@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\BusinessService\ArborescenceBS;
 use App\Entity\Categorie;
 use App\Entity\Document;
-use App\Entity\Page;
-use App\Form\PageType;
+use App\Entity\Article;
+use App\Form\ArticleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,103 +19,103 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/", name="app_admin_default")
-     * @Route("/page/index")
+     * @Route("/Article/index")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    // Ma page d'accueil
-    public function page_index(request $request, ArborescenceBS $arborescenceBS)
+    // Ma Article d'accueil
+    public function Article_index(request $request, ArborescenceBS $arborescenceBS)
     {
-        // Récupération de l'arborescences des pages
+        // Récupération de l'arborescences des Articles
         $arborescences = $arborescenceBS->arbre();
 
-        // NOTE : Nous aurrions pu récupérer simplement la liste des pages par le répository.
-        // Mais nous n'aurions pas récupéré le notion d'arbre. C'est à dire que les pages enfants suivent la page parent,
-        // même si elle ont étés créées bien après une page de niveau supérieure
+        // NOTE : Nous aurrions pu récupérer simplement la liste des Articles par le répository.
+        // Mais nous n'aurions pas récupéré le notion d'arbre. C'est à dire que les Articles enfants suivent la Article parent,
+        // même si elle ont étés créées bien après une Article de niveau supérieure
 
-        return $this->render('admin/page/index.html.twig', [
+        return $this->render('admin/Article/index.html.twig', [
             'arbre' => $arborescences
         ]);
 
     }
 
     /**
-     * @Route("/page/new")
+     * @Route("/Article/new")
      * @param Request $request
      * @param EntityManagerInterface $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    // formulaire de création de la page
-    public function page_new(Request $request, EntityManagerInterface $manager)
+    // formulaire de création de la Article
+    public function Article_new(Request $request, EntityManagerInterface $manager)
     {
         date_default_timezone_set('Europe/Paris');
-        $form = $this->createForm(PageType::class);
+        $form = $this->createForm(ArticleType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $page = $form->getData();
-            $page->setCreatedAt(new \DateTime());
-            //  $page->setJourAt(new \DateTime());
-            $manager->persist($page);
+            $Article = $form->getData();
+            $Article->setCreatedAt(new \DateTime());
+            //  $Article->setJourAt(new \DateTime());
+            $manager->persist($Article);
             $manager->flush();
 
-            return $this->redirectToRoute('app_admin_page_index',
-                ['id' => $page->getId()]); // Redirection vers la page
+            return $this->redirectToRoute('app_admin_Article_index',
+                ['id' => $Article->getId()]); // Redirection vers la Article
         }
-        return $this->render('admin/page/new.html.twig', [
+        return $this->render('admin/Article/new.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/page/{id}")
+     * @Route("/Article/{id}")
      * @param Request $request
      * @param EntityManagerInterface $manager
-     * @param Page $page
+     * @param Article $Article
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    // formulaire de modification de la page
-    public function page_edit(page $page, Request $request, EntityManagerInterface $manager)
+    // formulaire de modification de la Article
+    public function Article_edit(Article $Article, Request $request, EntityManagerInterface $manager)
     {
-        // $page->setJourAt(new \DateTime());
+        // $Article->setJourAt(new \DateTime());
 
         // NOTE : ici inutile de créer un formulaire différent de "new". On réutilise le formulaire précédent.
 
-        $form = $this->createForm(PageType::class, $page);
+        $form = $this->createForm(ArticleType::class, $Article);
         $form->handleRequest($request);
 
         if ($form->isSubMitted() && $form->isValid()) {
-            $manager->persist($page);
-            //    $page->setJourAt(new \DateTime());
-            $manager->persist($page);
+            $manager->persist($Article);
+            //    $Article->setJourAt(new \DateTime());
+            $manager->persist($Article);
             $manager->flush();
 
-            return $this->redirectToRoute('app_admin_page_index');
+            return $this->redirectToRoute('app_admin_Article_index');
         }
-        return $this->render('admin/page/edit.html.twig', [
+        return $this->render('admin/Article/edit.html.twig', [
             'form' => $form->createView(),
-            'page' => $page
+            'Article' => $Article
         ]);
     }
 
     /**
-     * @Route("/page/{id}/delete")
+     * @Route("/Article/{id}/delete")
      * @param Request $request
      * @param EntityManagerInterface $manager
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    // suppression de la page
-    public function page_delete($id, EntityManagerInterface $manager, Request $request)
+    // suppression de la Article
+    public function Article_delete($id, EntityManagerInterface $manager, Request $request)
     {
-        $repo = $this->getDoctrine()->getRepository(Page::class);
-        $page = $repo->find($id);
+        $repo = $this->getDoctrine()->getRepository(Article::class);
+        $Article = $repo->find($id);
 
 
-        $manager->remove($page);
+        $manager->remove($Article);
         $manager->flush();
 
-        return $this->redirectToRoute('app_admin_page_index');
+        return $this->redirectToRoute('app_admin_Article_index');
     }
 
     /**

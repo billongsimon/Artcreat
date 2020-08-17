@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des pages{% endblock %}
+
+{% block body %}
+
+
+
+<div class="jumbotron">
+<a href="{{path('admin')}}" class="btn btn-primary"> retour vers l'accueil </a> 
+        <br>  
+        <br>
+        <br>
+        <p><a href="{{path('admin.form.page')}}" class="btn btn-primary"> nouvel page </a></p>                                
+</div>
+     
+
+
+<table>
+<tr>
+<th>id</th>
+<th>titre</th>
+<th>PageParent</th>
+<th>auteur</th>
+<th>date de création</th>
+<th>date de mise à jour</th>
+<th>contenu</th>
+<th>categorie</th>
+<th>modifier</th>
+<th>supprimer</th>
+
+</tr>
+
+        {% for page in page %}
+<tr>
+<td>{{page.id}}</td>
+<td><a href="{{path('admin.show',{'id':page.id})}}">{{page.titre}}</a></td>
+<td>{% if page.pageParent is not null %}{{ page.pageParent.titre }}{% endif %}</td>
+<td>{{page.auteur}}</td>
+<td>{{page.createdAt | date('d/m/Y h:i ')}}</td>
+<td>{{page.jourAt | date('d/m/Y h:i')}}</td>
+<td>{{page.contenu}}</td>
+<td>{{page.categorie.titre}}</td>
+<td><a href="{{path('admin.page.modif', {'id':page.id})}}" class="btn btn-info"> modifier </a>                              
+<td><a href="{{path('admin.page.sup', {'id':page.id})}}" class="btn btn-danger"> Supprimer </a>                           
+                </tr>
+            
+        {% endfor %}
+            </table>            
+        
+        </div>
+
+
+{% endblock %}

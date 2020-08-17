@@ -19,12 +19,12 @@ class Commentaire
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $author;
+    private $auteur;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private $contenu;
 
     /**
      * @ORM\Column(type="datetime")
